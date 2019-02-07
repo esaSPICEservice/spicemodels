@@ -43,7 +43,7 @@ def process_obj(inputfile, displacement=[0,0,0]):
         verfacet.append(line)
     print('number of vertex: ', len(vertex))
     print('number of facets: ', len(facets))
-    f = open(outputfile, 'w')
+    f = open(outputfile, 'w+')
     for item in verfacet:
         f.write("%s" % item)
     print('vertex-facet input file created for DSK generation')
@@ -58,10 +58,9 @@ def create_setupfile(outputfile):
     centername = input(' - Center name: ')
     refframe = input(' - Body reference frame: ')
     distunits = input(' - Units of distance of OBJ file: ')
-    naifname = input(' - Naif Surface Name: ')
     naifcode = input(' - Naif Surface Code: ')
     naifbody = input(' - Naif Surface Body (float): ')
-    file = open("setup.txt", "w")
+    file = open("setup.txt", "w+")
     file.write("\\begindata\n")
     file.write("\n")
     file.write("    INPUT_SHAPE_FILE    = '" + outputfile + "'\n")
@@ -84,7 +83,7 @@ def create_setupfile(outputfile):
     file.write("    MAXIMUM_LONGITUDE   =  180.0\n")
     file.write("    DATA_TYPE           = 2\n")
     file.write("    PLATE_TYPE          = 3\n")
-    file.write("    NAIF_SURFACE_NAME   += '" + naifname + "'\n")
+    file.write("    NAIF_SURFACE_NAME   += '" + surfname + "'\n")
     file.write("    NAIF_SURFACE_CODE   += " + naifcode + "\n")
     file.write("    NAIF_SURFACE_BODY   += " + naifbody + "\n")
     file.write("\n")
@@ -95,8 +94,14 @@ def create_setupfile(outputfile):
 def obj2dsk():
     inputfile = input('Introduce .OBJ file to process: ')
     dx = input('Introduce x displacement (int): ')
+    if dx == '':
+        dx = 0
     dy = input('Introduce y displacement (int): ')
+    if dy == '':
+        dy = 0
     dz = input('Introduce z displacement (int): ')
+    if dz == '':
+        dz = 0
     displacement = [float(dx), float(dy), float(dz)]
     try:
         outputfile = process_obj(inputfile, displacement=displacement)
@@ -226,7 +231,7 @@ class OBJ:
         self.faces = []
 
         material = None
-        for line in open(filename, "r"):
+        for line in open(filename, "r+"):
             if line.startswith('#'): continue
             values = line.split()
             if not values: continue
@@ -275,7 +280,7 @@ class OBJax:
         self.faces = []
 
         material = None
-        for line in open(filename, "r"):
+        for line in open(filename, "r+"):
             if line.startswith('#'): continue
             values = line.split()
             if not values: continue
