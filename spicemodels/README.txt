@@ -33,7 +33,6 @@ This is an example run in python console with BepiColombo:
 	- Center name: MPO
 	- Body reference frame: MPO_SPACECRAFT
 	- Units of distance of OBJ file: CENTIMETERS
-	- Naif Surface Name: BEPI_1
 	- Naif Surface Code: 1
 	- Naif Surface Body (float): -121
 	setup file created successfully!!
